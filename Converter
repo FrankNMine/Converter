@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pressure Unit Converter</title>
+    <script>
+        function convertPressure() {
+            var U1 = document.getElementById("unit1").value.toLowerCase();
+            var U2 = document.getElementById("unit2").value.toLowerCase();
+            var value = parseFloat(document.getElementById("pressureValue").value);
+
+            var result;
+
+            if (U1 === "kpa" && U2 === "torr") {
+                result = value * 7.50062;
+            } else if (U1 === "torr" && U2 === "kpa") {
+                result = value / 7.50062;
+            } else if (U1 === "atm" && U2 === "torr") {
+                result = value * 760;
+            } else if (U1 === "torr" && U2 === "atm") {
+                result = value * 0.00131579;
+            } else if (U1 === "mmhg" && U2 === "torr") {
+                result = value;
+            } else if (U1 === "atm" && U2 === "kpa") {
+                result = value * 101.325;
+            } else if (U1 === "kpa" && U2 === "atm") {
+                result = value * 0.00986923;
+            }
+
+            alert(`${value} ${U1} is equal to ${result.toFixed(4)} ${U2}.`);
+        }
+
+        function handleKeyPress(event, nextInputId) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById(nextInputId).focus();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Pressure Unit Converter</h1>
+    <form>
+        <label for="unit1">Unit 1:</label>
+        <input type="text" id="unit1" required onkeydown="handleKeyPress(event, 'unit2')">
+
+        <label for="unit2">To what unit:</label>
+        <input type="text" id="unit2" required onkeydown="handleKeyPress(event, 'pressureValue')">
+
+        <label for="pressureValue">Enter pressure for:</label>
+        <input type="number" id="pressureValue" required onkeydown="handleKeyPress(event, 'convertButton')">
+
+        <button type="button" id="convertButton" onclick="convertPressure()">Convert</button>
+    </form>
+
+    <div id="result"></div>
+</body>
+</html>
